@@ -1,0 +1,14 @@
+{"question": "What does a PTP modifier indicator of 0 mean?", "expected_source": "ncci_ptp_edits.md", "expect_substring": "not allowed"}
+{"question": "Can a modifier ever bypass an indicator 1 edit?", "expected_source": "ncci_ptp_edits.md", "expect_substring": "modifier"}
+{"question": "What is the difference between MAI 2 and MAI 3 for an MUE?", "expected_source": "mue_overview.md", "expect_substring": "appeal"}
+{"question": "What is a Medically Unlikely Edit?", "expected_source": "mue_overview.md", "expect_substring": "units of service"}
+{"question": "When should modifier 25 be appended to a visit?", "expected_source": "modifier_25.md", "expect_substring": "separately identifiable"}
+{"question": "Does using modifier 25 require a separate diagnosis?", "expected_source": "modifier_25.md", "expect_substring": "separate diagnosis is not required"}
+{"question": "What is included in a 90 day global surgical package?", "expected_source": "global_surgical_package.md", "expect_substring": "postoperative"}
+{"question": "Which modifier identifies an unrelated procedure during the postoperative period?", "expected_source": "global_surgical_package.md", "expect_substring": "79"}
+{"question": "Can an add-on code be billed by itself without a primary procedure?", "expected_source": "add_on_codes.md", "expect_substring": "never reported alone"}
+{"question": "What does the XS modifier indicate?", "expected_source": "modifier_59_x.md", "expect_substring": "separate"}
+{"question": "If I treat several skin growths in one session, can I charge for the extra ones on a line by themselves?", "expected_source": "add_on_codes.md", "expect_substring": "primary"}
+{"question": "Is it acceptable to charge for an office visit the same day as a small in-office procedure?", "expected_source": "modifier_25.md", "expect_substring": "above and beyond"}
+{"question": "How many times can the same blood test be reported for one patient in a single day?", "expected_source": "mue_overview.md", "expect_substring": "maximum number of units"}
+{"question": "After an operation, what lets me bill for treating a problem unrelated to the surgery?", "expected_source": "global_surgical_package.md", "expect_substring": "unrelated"}

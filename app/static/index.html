@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SourceFetch — Grounded answers from billing &amp; coding policy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --page:#F1F5F9; --card:#FFFFFF; --card-2:#F8FAFC;
+  --line:#E2E8F0; --line-soft:#EDF1F6;
+  --text:#1B2733; --text-dim:#51637A; --text-faint:#8595A6;
+  --accent:#0071BC; --accent-deep:#004F84; --accent-tint:#E6F1F8;
+  --good:#12890E; --good-tint:#E7F3E7;
+  --radius:12px; --radius-sm:8px;
+  --shadow:0 1px 2px rgba(16,40,70,0.05), 0 8px 24px rgba(16,40,70,0.06);
+  --sans:'IBM Plex Sans',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;background:var(--page);color:var(--text);
+  font-family:var(--sans);font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;display:flex;flex-direction:column;
+}
+
+/* header */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:14px 26px;background:var(--card);border-bottom:1px solid var(--line);
+}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.brand-mark{
+  width:13px;height:17px;border-radius:2px;background:var(--accent);position:relative;flex:none;
+  box-shadow:3px 0 0 -1px #fff, 4px 0 0 -1px var(--accent-deep), 7px 0 0 -2px #fff, 8px 0 0 -2px #9DBED0;
+}
+.brand-name{font-weight:700;font-size:18px;letter-spacing:-0.01em;color:var(--text)}
+.brand-tag{color:var(--text-faint);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.status{display:flex;gap:8px;flex:none}
+.status-chip{
+  font-family:var(--mono);font-size:11px;color:var(--text-dim);
+  background:var(--card-2);border:1px solid var(--line);border-radius:999px;padding:4px 11px;white-space:nowrap;
+}
+.status-chip.on{color:var(--good);border-color:#BFE3CD;background:var(--good-tint)}
+
+/* layout */
+.wrap{flex:1;width:100%;max-width:860px;margin:0 auto;padding:32px 26px 0;display:flex;flex-direction:column}
+
+/* ask */
+.ask label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-faint);margin-bottom:9px}
+.ask-row{display:flex;gap:10px}
+.ask input{
+  flex:1;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  color:var(--text);font-family:var(--sans);font-size:16px;padding:14px 16px;box-shadow:0 1px 2px rgba(16,40,70,0.03);
+}
+.ask input::placeholder{color:var(--text-faint)}
+.ask input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,113,188,0.14)}
+.btn{
+  font-family:var(--sans);font-weight:600;font-size:14px;border-radius:var(--radius-sm);
+  padding:0 22px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;
+  transition:background .15s ease;
+}
+.btn:hover{background:var(--accent-deep)}
+.btn:disabled{opacity:.55;cursor:default}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.examples{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+.ex{font-family:var(--sans);font-size:13px;color:var(--text-dim);
+  background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer;transition:border-color .15s,color .15s,background .15s}
+.ex:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-tint)}
+
+/* answer */
+.answer-wrap{margin-top:30px;padding-bottom:40px}
+.empty{color:var(--text-faint);font-size:15px;padding:18px 2px;line-height:1.6;max-width:560px}
+
+.answer-card{
+  border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--radius);
+  background:var(--card);padding:22px 24px;box-shadow:var(--shadow);
+}
+.answer-mode{font-family:var(--mono);font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-faint);margin-bottom:12px;display:flex;gap:8px;align-items:center}
+.answer-mode .dot{width:6px;height:6px;border-radius:50%;background:var(--good)}
+.answer-mode.extractive .dot{background:var(--accent)}
+
+/* rendered markdown inside the answer */
+.answer-body{color:var(--text);font-size:15.5px;line-height:1.62}
+.answer-body .md-h{font-family:var(--sans);font-weight:600;color:var(--text);font-size:14px;letter-spacing:0.01em;margin:18px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--line-soft)}
+.answer-body .md-p{margin:0 0 11px}
+.answer-body .md-ul,.answer-body .md-ol{margin:0 0 11px;padding-left:20px}
+.answer-body .md-ul li,.answer-body .md-ol li{margin:4px 0}
+.answer-body .md-ul{list-style:none;padding-left:4px}
+.answer-body .md-ul li{position:relative;padding-left:18px}
+.answer-body .md-ul li::before{content:"";position:absolute;left:2px;top:9px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.answer-body .md-q{margin:0 0 11px;padding:10px 14px;border-left:3px solid var(--accent);background:var(--accent-tint);border-radius:0 6px 6px 0;color:var(--text-dim)}
+.answer-body strong{font-weight:600;color:var(--text)}
+.answer-body code{font-family:var(--mono);font-size:13px;background:var(--card-2);border:1px solid var(--line);border-radius:4px;padding:1px 5px}
+.answer-body > :first-child{margin-top:0}
+.answer-body > :last-child{margin-bottom:0}
+
+.cite-ref{
+  font-family:var(--mono);font-size:11.5px;color:var(--accent);
+  background:var(--accent-tint);border:1px solid #BcdAe6;border-radius:4px;
+  padding:0 5px;margin:0 1px;cursor:pointer;vertical-align:1px;font-weight:600;
+}
+.cite-ref:hover{background:var(--accent);color:#fff}
+
+/* retrieved passages */
+.sources{margin-top:24px}
+.sources h2{font-family:var(--mono);font-size:11px;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-faint);margin:0 0 12px;font-weight:500}
+.passage{
+  border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--card);
+  padding:13px 16px;margin-bottom:10px;transition:border-color .2s,box-shadow .2s;
+}
+.passage.flash{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,113,188,0.12)}
+.passage-head{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.passage-n{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--accent);background:var(--accent-tint);border-radius:4px;padding:2px 7px}
+.passage-src{font-family:var(--mono);font-size:12px;color:var(--text-dim)}
+.passage-score{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--text-faint)}
+.passage-score b{color:var(--good);font-weight:600}
+.passage-text{font-size:14px;color:var(--text-dim);line-height:1.5}
+
+.footnote{padding:16px 26px;border-top:1px solid var(--line);background:var(--card);color:var(--text-faint);font-size:12px;text-align:center}
+.spin{display:inline-block;width:12px;height:12px;border:2px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px;margin-right:7px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation:none}}
+@media (max-width:620px){.brand-tag{display:none}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <span class="brand-name">SourceFetch</span>
+    <span class="brand-tag">Grounded answers from billing &amp; coding policy</span>
+  </div>
+  <div class="status">
+    <span class="status-chip" id="st-index">loading…</span>
+    <span class="status-chip" id="st-gen"></span>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="ask">
+    <label for="q">Ask the manuals</label>
+    <div class="ask-row">
+      <input id="q" type="text" autocomplete="off" spellcheck="false"
+             placeholder="When can I append modifier 25 to an office visit?" />
+      <button id="ask" class="btn">Ask</button>
+    </div>
+    <div class="examples" id="examples"></div>
+  </div>
+
+  <div class="answer-wrap">
+    <div id="empty" class="empty">Answers are drawn only from the ingested policy text, and every claim cites the passage it came from. Ask a question, or try one above.</div>
+    <div id="answer" hidden></div>
+  </div>
+</main>
+
+<footer class="footnote">
+  Educational tool over sample / public policy text. Not billing advice. Answers are limited to ingested documents.
+</footer>
+
+<script>
+const $=s=>document.querySelector(s);
+const EXAMPLES=[
+  "What does a PTP modifier indicator of 0 mean?",
+  "Difference between MAI 2 and MAI 3?",
+  "When should modifier 25 be used?",
+  "Can an add-on code be billed alone?",
+];
+
+init();
+async function init(){
+  const ex=$("#examples");
+  EXAMPLES.forEach(t=>{const b=document.createElement("button");b.className="ex";b.textContent=t;
+    b.onclick=()=>{$("#q").value=t;ask();};ex.appendChild(b);});
+  $("#ask").onclick=ask;
+  $("#q").addEventListener("keydown",e=>{if(e.key==="Enter")ask();});
+  try{
+    const s=await fetch("/api/status").then(r=>r.json());
+    $("#st-index").textContent=`${s.chunks} passages · ${s.sources.length} docs · ${s.embedder}`;
+    $("#st-index").classList.add("on");
+    $("#st-gen").textContent = s.generation==="anthropic" ? `answers: ${s.model}` : "answers: extractive";
+    if(s.generation==="anthropic") $("#st-gen").classList.add("on");
+  }catch{ $("#st-index").textContent="offline"; }
+}
+
+async function ask(){
+  const q=$("#q").value.trim();
+  if(!q) return;
+  $("#empty").hidden=true;
+  const out=$("#answer");
+  out.hidden=false;
+  out.innerHTML=`<div class="answer-card"><div class="answer-mode"><span class="spin"></span>retrieving and composing…</div></div>`;
+  $("#ask").disabled=true;
+  try{
+    const d=await fetch("/api/ask",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({question:q,k:5})}).then(r=>r.json());
+    render(d);
+  }catch(e){
+    out.innerHTML=`<div class="answer-card"><div class="answer-body">Something went wrong reaching the service. Is it running?</div></div>`;
+  }finally{ $("#ask").disabled=false; }
+}
+
+function render(d){
+  const out=$("#answer");
+  const modeLabel = d.mode==="generated" ? "Grounded answer" : d.mode==="extractive" ? "Top passages (no model key — extractive)" : d.mode;
+  const body = renderMarkdown(d.answer);
+  const passages = (d.contexts||[]).map((c,i)=>`
+    <div class="passage" id="p-${i+1}">
+      <div class="passage-head">
+        <span class="passage-n">${i+1}</span>
+        <span class="passage-src">${escapeHtml(c.source)}</span>
+        <span class="passage-score">sim <b>${(c.score).toFixed(3)}</b></span>
+      </div>
+      <div class="passage-text">${escapeHtml(c.text)}</div>
+    </div>`).join("");
+  out.innerHTML=`
+    <div class="answer-card">
+      <div class="answer-mode ${d.mode==='extractive'?'extractive':''}"><span class="dot"></span>${modeLabel}</div>
+      <div class="answer-body">${body}</div>
+    </div>
+    <div class="sources"><h2>Retrieved passages</h2>${passages}</div>`;
+  out.querySelectorAll(".cite-ref").forEach(el=>{
+    el.onclick=()=>{
+      const n=el.dataset.n;const p=document.getElementById("p-"+n);
+      if(p){p.scrollIntoView({behavior:"smooth",block:"center"});p.classList.add("flash");setTimeout(()=>p.classList.remove("flash"),1200);}
+    };
+  });
+}
+
+// Minimal, escaping-safe Markdown -> HTML for the answer body.
+function renderMarkdown(src){
+  const lines=String(src??"").split(/\r?\n/);
+  const inline=s=>{
+    s=escapeHtml(s);
+    s=s.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+    s=s.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g,'$1<em>$2</em>');
+    s=s.replace(/`([^`]+)`/g,'<code>$1</code>');
+    s=s.replace(/\[(\d+)\]/g,(m,n)=>`<span class="cite-ref" data-n="${n}">${n}</span>`);
+    return s;
+  };
+  let html="",i=0;
+  while(i<lines.length){
+    const line=lines[i];
+    if(/^\s*$/.test(line)){i++;continue;}
+    const h=/^(#{1,6})\s+(.*)$/.exec(line);
+    if(h){html+=`<div class="md-h">${inline(h[2])}</div>`;i++;continue;}
+    if(/^\s*>\s?/.test(line)){
+      const buf=[];
+      while(i<lines.length&&/^\s*>\s?/.test(lines[i])){buf.push(lines[i].replace(/^\s*>\s?/,""));i++;}
+      html+=`<blockquote class="md-q">${inline(buf.join(" "))}</blockquote>`;continue;
+    }
+    if(/^\s*[-*]\s+/.test(line)){
+      const items=[];
+      while(i<lines.length&&/^\s*[-*]\s+/.test(lines[i])){items.push(lines[i].replace(/^\s*[-*]\s+/,""));i++;}
+      html+=`<ul class="md-ul">`+items.map(it=>`<li>${inline(it)}</li>`).join("")+`</ul>`;continue;
+    }
+    if(/^\s*\d+\.\s+/.test(line)){
+      const items=[];
+      while(i<lines.length&&/^\s*\d+\.\s+/.test(lines[i])){items.push(lines[i].replace(/^\s*\d+\.\s+/,""));i++;}
+      html+=`<ol class="md-ol">`+items.map(it=>`<li>${inline(it)}</li>`).join("")+`</ol>`;continue;
+    }
+    const para=[line];i++;
+    while(i<lines.length&&!/^\s*$/.test(lines[i])&&!/^#{1,6}\s/.test(lines[i])&&!/^\s*>/.test(lines[i])&&!/^\s*[-*]\s+/.test(lines[i])&&!/^\s*\d+\.\s+/.test(lines[i])){para.push(lines[i]);i++;}
+    html+=`<p class="md-p">${inline(para.join(" "))}</p>`;
+  }
+  return html;
+}
+function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+</script>
+</body>
+</html>

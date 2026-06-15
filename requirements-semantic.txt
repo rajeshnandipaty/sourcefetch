@@ -1,0 +1,4 @@
+# Optional — semantic embeddings via the Hugging Face sentence-transformers stack.
+# Heavier (pulls in torch). Install only if you want EMBEDDINGS_BACKEND=sentence-transformers.
+#   pip install -r requirements-semantic.txt
+sentence-transformers>=3.0,<6.0
