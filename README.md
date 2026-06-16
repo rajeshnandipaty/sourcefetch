@@ -116,7 +116,7 @@ Ingestion reads `.md`, `.txt`, and `.pdf` (via `pypdf`), so the real PDFs work w
 
 ## Hosting
 
-The retrieval layer is cheap and safe to expose, so SourceFetch can run as a public demo on Google Cloud Run in retrieval-only mode — see [DEPLOY.md](DEPLOY.md). The generated-answer layer makes paid API calls, so it stays key-gated (enable it only where access is controlled). The source is here, and a short demo video is on [my portfolio](https://rajeshnandipaty.com/projects).
+The retrieval layer is cheap and safe to expose, so SourceFetch can run as a public demo on Google Cloud Run in retrieval-only mode — see [DEPLOY.md](DEPLOY.md). The generated-answer layer makes paid API calls, so it stays key-gated (enable it only where access is controlled). The source is here, and a short demo video is on [my portfolio](https://rajeshnandipaty.com/projects/sourcefetch).
 
 ## Not billing advice
 
