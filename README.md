@@ -6,7 +6,7 @@
 
 <img width="1920" height="1200" alt="SF6" src="https://github.com/user-attachments/assets/6170097f-92df-4f54-8030-7a83014af82f" />
 
-Billers and coders live inside dense policy PDFs (NCCI Policy Manual, Claims Processing Manual, modifier guidance) searching for the one paragraph that settles a question. SourceFetch turns that corpus into a question-answering service: it retrieves the relevant passages from a vector store and has a model answer strictly from them, citing each passage inline. It's the companion to [ScrubCheck](https://github.com/rajeshnandipaty/scrubcheck). ScrubCheck flags *that* a claim will deny while SourceFetch answers *why* from the manual.
+Billers and coders spend their day inside dense policy PDFs (NCCI Policy Manual, Claims Processing Manual, modifier guidance) searching for the one paragraph that settles a question. SourceFetch turns that corpus into a question-answering service: it retrieves the relevant passages from a vector store and has a model answer strictly from them, citing each passage inline. It's the companion to [ScrubCheck](https://github.com/rajeshnandipaty/scrubcheck). ScrubCheck flags *that* a claim will deny while SourceFetch answers *why* from the manual.
 
 ## What it does
 
