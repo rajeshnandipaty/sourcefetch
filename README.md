@@ -21,7 +21,7 @@ POST /api/search   retrieval only (passages + similarity scores)
 POST /api/ask      retrieve + grounded, cited answer
 ```
 
-## The architecture, on purpose
+## The architecture
 
 The same discipline runs through this whole portfolio: **the model is only allowed to speak from retrieved facts.** That principle shapes every layer here.
 
