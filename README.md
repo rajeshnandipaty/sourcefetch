@@ -1,5 +1,7 @@
 # SourceFetch
 
+**[Launch Live Demo](https://sourcefetch-135559900051.us-central1.run.app/)**
+
 > Ask a plain-English question about billing and coding policy and get an answer drawn **only** from the source manuals, with every claim citing the passage it came from. Retrieval-augmented generation over reference text, with an evaluation harness that measures whether it actually works.
 
 <img width="1920" height="1200" alt="SF3" src="https://github.com/user-attachments/assets/dcd47495-4492-4e39-a136-2ecbe4be5a37" />
